@@ -5,11 +5,13 @@ import LRUCache from 'lru-cache';
 
 import bufferStream from './bufferStream.js';
 
+const basicAuth = process.env.NPM_BASIC_AUTH;
+
 const npmRegistryURL =
   process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org';
 
 const agent = new https.Agent({
-  keepAlive: true
+  keepAlive: true,
 });
 
 const oneMegabyte = 1024 * 1024;
@@ -19,7 +21,7 @@ const oneMinute = oneSecond * 60;
 const cache = new LRUCache({
   max: oneMegabyte * 40,
   length: Buffer.byteLength,
-  maxAge: oneSecond
+  maxAge: oneSecond,
 });
 
 const notFound = '';
@@ -48,13 +50,14 @@ async function fetchPackageInfo(packageName, log) {
 
   const { hostname, pathname, port } = url.parse(infoURL);
   const options = {
+    auth: basicAuth,
     agent: agent,
     hostname: hostname,
     path: pathname,
     port: port || 443,
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   };
 
   const res = await get(options);
@@ -120,7 +123,7 @@ const packageConfigExcludeKeys = [
   'homepage',
   'keywords',
   'maintainers',
-  'scripts'
+  'scripts',
 ];
 
 function cleanPackageConfig(config) {
@@ -176,10 +179,11 @@ export async function getPackage(packageName, version, log) {
 
   const { hostname, pathname, port } = url.parse(tarballURL);
   const options = {
+    auth: basicAuth,
     agent: agent,
     hostname: hostname,
     path: pathname,
-    port: port || 443
+    port: port || 443,
   };
 
   const res = await get(options);

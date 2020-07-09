@@ -1,11 +1,11 @@
 {
-  "name": "unpkg-server",
-  "version": "0.0.4",
+  "name": "@frattaro/unpkg-server",
+  "version": "0.0.5",
   "private": false,
   "description": "The CDN for everything on npm",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KevinSheedy/unpkg-server.git"
+    "url": "https://github.com/frattaro/unpkg-server.git"
   },
   "files": [
     "server.js"

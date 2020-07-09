@@ -17,7 +17,7 @@ const env = process.env.BUILD_ENV || 'development';
 
 const manifest = entryManifest();
 
-const client = ['browse', 'main'].map(entryName => {
+const client = ['browse', 'main'].map((entryName) => {
   return {
     external: ['@emotion/core', 'react', 'react-dom'],
     input: `modules/client/${entryName}.js`,
@@ -28,8 +28,8 @@ const client = ['browse', 'main'].map(entryName => {
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
-        '@emotion/core': 'emotionCore'
-      }
+        '@emotion/core': 'emotionCore',
+      },
     },
     plugins: [
       manifest.record({ publicPath: '/_client/' }),
@@ -43,21 +43,21 @@ const client = ['browse', 'main'].map(entryName => {
             'createElement',
             'forwardRef',
             'Component',
-            'Fragment'
-          ]
-        }
+            'Fragment',
+          ],
+        },
       }),
       replace({
-        'process.env.NODE_ENV': JSON.stringify(env)
+        'process.env.NODE_ENV': JSON.stringify(env),
       }),
       url({
         limit: 5 * 1024,
-        publicPath: '/_client/'
+        publicPath: '/_client/',
       }),
       compiler(
         env !== 'production' ? { formatting: 'PRETTY_PRINT' } : undefined
-      )
-    ]
+      ),
+    ],
   };
 });
 
@@ -79,9 +79,9 @@ const server = {
     url({
       limit: 5 * 1024,
       publicPath: '/_client/',
-      emitFiles: false
-    })
-  ]
+      emitFiles: false,
+    }),
+  ],
 };
 
-module.exports = client.concat(server);
+module.exports = server;
