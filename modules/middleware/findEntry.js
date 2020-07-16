@@ -13,8 +13,8 @@ function fileRedirect(req, res, entry) {
   // clear which file is being served.
   res
     .set({
-      'Cache-Control': 'public, max-age=31536000', // 1 year
-      'Cache-Tag': 'redirect, file-redirect'
+      'Cache-Control': 'public, max-age=31536000, s-maxage=31536000', // 1 year
+      'Cache-Tag': 'redirect, file-redirect',
     })
     .redirect(
       302,
@@ -32,8 +32,8 @@ function indexRedirect(req, res, entry) {
   // resolve correctly.
   res
     .set({
-      'Cache-Control': 'public, max-age=31536000', // 1 year
-      'Cache-Tag': 'redirect, index-redirect'
+      'Cache-Control': 'public, max-age=31536000, s-maxage=31536000', // 1 year
+      'Cache-Tag': 'redirect, index-redirect',
     })
     .redirect(
       302,
@@ -74,7 +74,7 @@ function searchEntries(stream, filename) {
           // prefix other than `package/`. e.g. the firebase package uses the
           // `firebase_npm/` prefix. So we just strip the first dir name.
           path: header.name.replace(/^[^/]+/g, ''),
-          type: header.type
+          type: header.type,
         };
 
         // Skip non-files and files that don't match the entryName.
@@ -145,7 +145,7 @@ function searchEntries(stream, filename) {
           // If we didn't find a matching file entry,
           // try a directory entry with the same name.
           foundEntry: foundEntry || matchingEntries[filename] || null,
-          matchingEntries: matchingEntries
+          matchingEntries: matchingEntries,
         });
       });
   });
@@ -167,7 +167,7 @@ async function findEntry(req, res, next) {
       .status(404)
       .set({
         'Cache-Control': 'public, max-age=31536000', // 1 year
-        'Cache-Tag': 'missing, missing-entry'
+        'Cache-Tag': 'missing, missing-entry',
       })
       .type('text')
       .send(`Cannot find "${req.filename}" in ${req.packageSpec}`);
@@ -193,7 +193,7 @@ async function findEntry(req, res, next) {
       .status(404)
       .set({
         'Cache-Control': 'public, max-age=31536000', // 1 year
-        'Cache-Tag': 'missing, missing-index'
+        'Cache-Tag': 'missing, missing-index',
       })
       .type('text')
       .send(`Cannot find an index in "${req.filename}" in ${req.packageSpec}`);
