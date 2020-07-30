@@ -10,14 +10,19 @@ function isHash(value) {
  * Reject requests for invalid npm package names.
  */
 export default function validatePackageName(req, res, next) {
-  if (isHash(req.packageName)) {
-    return res
-      .status(403)
-      .type('text')
-      .send(`Invalid package name "${req.packageName}" (cannot be a hash)`);
-  }
+  let errors;
+  if (!process.env.PACKAGES.includes(req.packageName)) {
+    errors = ['Package was not approved for distribution.'];
+  } else {
+    if (isHash(req.packageName)) {
+      return res
+        .status(403)
+        .type('text')
+        .send(`Invalid package name "${req.packageName}" (cannot be a hash)`);
+    }
 
-  const errors = validateNpmPackageName(req.packageName).errors;
+    errors = validateNpmPackageName(req.packageName).errors;
+  }
 
   if (errors) {
     const reason = errors.join(', ');

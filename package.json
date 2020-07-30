@@ -1,6 +1,6 @@
 {
   "name": "@frattaro/unpkg-server",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "description": "The CDN for everything on npm",
   "repository": {
