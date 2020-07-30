@@ -1,6 +1,6 @@
 {
   "name": "@frattaro/unpkg-server",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "description": "The CDN for everything on npm",
   "repository": {
@@ -81,8 +81,5 @@
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-url": "^2.1.0",
     "supertest": "^3.0.0"
-  },
-  "engines": {
-    "node": "10.x.x"
   }
 }
