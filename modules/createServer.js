@@ -11,6 +11,7 @@ import serveFile from './actions/serveFile.js';
 import serveMainPage from './actions/serveMainPage.js';
 import serveModule from './actions/serveModule.js';
 import serveStats from './actions/serveStats.js';
+import serveVersions from './actions/serveVersions';
 
 import allowQuery from './middleware/allowQuery.js';
 import findEntry from './middleware/findEntry.js';
@@ -150,9 +151,10 @@ export default function createServer() {
 
     app.get(
       '*',
-      allowQuery('module'),
+      allowQuery(['module', 'versions']),
       validatePackagePathname,
       validatePackageName,
+      serveVersions,
       validatePackageVersion,
       validateFilename,
       findEntry,
