@@ -17,11 +17,12 @@ const agent = new https.Agent({
 const oneMegabyte = 1024 * 1024;
 const oneSecond = 1000;
 const oneMinute = oneSecond * 60;
+const oneHour = oneMinute * 60;
 
 const cache = new LRUCache({
   max: oneMegabyte * 40,
   length: Buffer.byteLength,
-  maxAge: oneSecond,
+  maxAge: oneHour * 8,
 });
 
 const notFound = '';
